@@ -6,7 +6,7 @@ void prelim(void) {
 	prout("-SUPER- STAR TREK");
 	skip(1);
 	prout("Latest update-21 Sept 78");
-	prout("BBS Door Version 1.0.1 - Get it at https://SynchroNetbbs.org");
+	prout("BBS Door Version 1.0.1 - Get it at https://SynchroNetBBS.org");
 	skip(1);
 }
 
