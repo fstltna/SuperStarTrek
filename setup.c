@@ -1,7 +1,23 @@
+#include <stdio.h>
 #include <time.h>
 #include "sst.h"
 
 void prelim(void) {
+	FILE *fptr;
+	char c;
+	// Open file
+	fptr = fopen("SST_Logo.txt", "r");
+	if (fptr != NULL)
+	{
+		// Read contents from file
+		c = fgetc(fptr);
+		while (c != EOF)
+		{
+			printf ("%c", c);
+			c = fgetc(fptr);
+		}
+		fclose(fptr);
+	}
 	skip(2);
 	prout("\033[1m\033[35m-SUPER- STAR TREK\033[37m\033[0m");
 	skip(1);
