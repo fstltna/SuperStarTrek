@@ -70,7 +70,7 @@ void events(void) {
 		/* If radio repaired, update star chart and attack reports */
 		if (stdamtim != 1e30 && REPORTS) {
 			stdamtim = 1e30;
-			prout("Lt. Uhura- \"Captain, the sub-space radio is working and");
+			prout("\033[31mLt. Uhura\033[37m- \"Captain, the sub-space radio is working and");
 			prout("   surveillance reports are coming in.");
 			skip(1);
 			for (i=1; i <= 8 ; i++)
@@ -81,7 +81,7 @@ void events(void) {
 				iseenit = 1;
 			}
 			skip(1);
-			prout("   The star chart is now up to date.\"");
+			prout("   \033[35mThe star chart is now up to date.\033[37m\"");
 			skip(1);
 		}
 		/* Cause extraneous event LINE to occur */
@@ -139,7 +139,7 @@ void events(void) {
 				Time = (10.0/(7.5*7.5))*yank; /* 7.5 is yank rate (warp 7.5) */
 				ictbeam = 1;
 				skip(1);
-				proutn("***");
+				proutn("\033[33m***\033[37m");
 				crmshp();
 				prout(" caught in long range tractor beam--");
 				/* If Kirk & Co. screwing around on planet, handle */
@@ -236,7 +236,7 @@ void events(void) {
 				if (ipage==0) pause(1);
 				ipage = 1;
 				skip(1);
-				proutn("Lt. Uhura-  \"Captain, the starbase in");
+				proutn("\033[31mLt. Uhura\033[37m-  \"Captain, the starbase in");
 				cramlc(1, batx, baty);
 				skip(1);
 				prout("   reports that it is under atttack and that it can");
@@ -284,14 +284,14 @@ void events(void) {
 					basex=basey=0;
 					newcnd();
 					skip(1);
-					prout("Spock-  \"Captain, I believe the starbase has been destroyed.\"");
+					prout("\033[34mSpock\033[37m-  \"Captain, I believe the starbase has been destroyed.\"");
 				}
 				else if (d.rembase != 1 && REPORTS) {
 					/* Get word via subspace radio */
 					if (ipage==0) pause(1);
 					ipage = 1;
 					skip(1);
-					prout("Lt. Uhura-  \"Captain, Starfleet Command reports that");
+					prout("\033[31mLt. Uhura\033[37m-  \"Captain, Starfleet Command reports that");
 					proutn("   the starbase in");
 					cramlc(1, batx, baty);
 					prout(" has been destroyed by");
@@ -338,7 +338,7 @@ void events(void) {
 							if (ipage==0) pause(1);
 							ipage = 1;
 							skip(1);
-							proutn("Lt. Uhura-  \"The deep space probe ");
+							proutn("\033[31mLt. Uhura\033[37m-  \"The deep space probe ");
 							if (i < 1 ||i > 8 || j < 1 || j > 8)
 								proutn("has left the galaxy");
 							else
@@ -352,7 +352,7 @@ void events(void) {
 						if (ipage==0) pause(1);
 						ipage = 1;
 						skip(1);
-						proutn("Lt. Uhura-  \"The deep space probe is now in ");
+						proutn("\033[31mLt. Uhura\033[37m-  \"The deep space probe is now in ");
 						cramlc(1, probecx, probecy);
 						prout(".\"");
 					}
@@ -481,14 +481,14 @@ void nova(int ix, int iy) {
 						d.galaxy[quadx][quady] -= 1;
 						d.starkl++;
 						crmena(1, IHSTAR, 2, ii, jj);
-						prout(" novas.");
+						prout(" \033[31mnovas\033[37m.");
 						quad[ii][jj] = IHDOT;
 						break;
 					case IHP: /* Destroy planet */
 						d.newstuf[quadx][quady] -= 1;
 						d.nplankl++;
 						crmena(1, IHP, 2, ii, jj);
-						prout(" destroyed.");
+						prout(" \033[31mdestroyed\033[37m.");
 						d.plnets[iplnet] = nulplanet;
 						iplnet = plnetx = plnety = 0;
 						if (landed == 1) {
@@ -508,12 +508,12 @@ void nova(int ix, int iy) {
 						d.basekl++;
 						newcnd();
 						crmena(1, IHB, 2, ii, jj);
-						prout(" destroyed.");
+						prout(" \033[31mdestroyed\033[37m.");
 						quad[ii][jj] = IHDOT;
 						break;
 					case IHE: /* Buffet ship */
 					case IHF:
-						prout("***Starship buffeted by nova.");
+						prout("\033[33m***Starship buffeted by nova\033[37m.");
 						if (shldup) {
 							if (shield >= 2000.0) shield -= 2000.0;
 							else {
@@ -551,7 +551,7 @@ void nova(int ix, int iy) {
 						newcx = ii + ii - hits[mm][1];
 						newcy = jj + jj - hits[mm][2];
 						crmena(1, iquad, 2, ii, jj);
-						proutn(" damaged");
+						proutn(" \033[31mdamaged\033[37m");
 						if (newcx<1 || newcx>10 || newcy<1 || newcy>10) {
 							/* can't leave quadrant */
 							skip(1);
@@ -682,9 +682,9 @@ void snova(int insx, int insy) {
 
 	if (insipient) {
 		skip(1);
-		prouts("***RED ALERT!  RED ALERT!");
+		prouts("\033[31m***RED ALERT!  RED ALERT!");
 		skip(1);
-		proutn("***Incipient supernova detected at");
+		proutn("\033[33m***Incipient supernova detected at\033[37m");
 		cramlc(2, nsx, nsy);
 		skip(1);
 		nqx = quadx;

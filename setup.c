@@ -3,10 +3,10 @@
 
 void prelim(void) {
 	skip(2);
-	prout("-SUPER- STAR TREK");
+	prout("\033[1m\033[35m-SUPER- STAR TREK\033[37m\033[0m");
 	skip(1);
 	prout("Latest update-21 Sept 78");
-	prout("BBS Door Version 1.0.1 - Get it at https://SynchroNetBBS.org");
+	prout("BBS Door Version \033[32m1.1.0\033[37m - Get it at \033[33mhttps://SynchronetBBS.org\033[37m");
 	skip(1);
 }
 
@@ -409,12 +409,12 @@ void setup(void) {
 		if (i < inbase) proutn("  ");
 	}
 	skip(2);
-	proutn("The Enterprise is currently in");
+	proutn("\033[32mThe Enterprise is currently in\033[37m");
 	cramlc(1, quadx, quady);
 	proutn(" ");
 	cramlc(2, sectx, secty);
 	skip(2);
-	prout("Good Luck!");
+	prout("\033[1mGood Luck!\033[0m");
 	if (d.nscrem) proutn("  YOU'LL NEED IT.");
 	skip(1);
 	newqad(0);
@@ -431,7 +431,7 @@ int choose(void) {
 		if (fromcommandline) /* Can start with command line options */
 			fromcommandline = 0;
 		else
-			proutn("Would you like a regular, tournament, or frozen game?");
+			proutn("Would you like a \033[1mregular\033[0m, \033[1mtournament\033[0m, or \033[1mfrozen\033[0m game? (or \033[1mquit\033[0m): ");
 		scan();
 		if (strlen(citem)==0) continue; // Try again
 		if (isit("tournament")) {
@@ -456,6 +456,10 @@ int choose(void) {
 			if (!alldone) thawed = 1; // No plaque if not finished
 			report(1);
 			return TRUE;
+		}
+		if (isit("quit")) {
+			exit(0);
+			break;
 		}
 		if (isit("regular")) {
 			skip(2);
@@ -486,8 +490,8 @@ int choose(void) {
 		}
 		else {
 			chew();
-			if (length==0) proutn("Would you like a Short, Medium, or Long game? ");
-			else if (skill == 0) proutn("Are you a Novice, Fair, Good, Expert, or Emeritus player?");
+			if (length==0) proutn("Would you like a \033[1mShort\033[0m, \033[1mMedium\033[0m, or \033[1mLong\033[0m game? ");
+			else if (skill == 0) proutn("Are you a \033[1mNovice\033[0m, \033[1mFair\033[0m, \033[1mGood\033[0m, \033[1mExpert\033[0m, or \033[1mEmeritus\033[0m player?");
 		}
 	}
 	while (TRUE) {
@@ -675,7 +679,7 @@ void newqad(int shutup) {
 		neutz = 1;
 		if (REPORTS) { 
 			skip(1);
-			prout("LT. UHURA- \"Captain, an urgent message.");
+			prout("\033[31mLT. UHURA\033[37m- \"Captain, an urgent message.");
 			prout("  I'll put it on audio.\"  CLICK");
 			skip(1);
 			prout("INTRUDER! YOU HAVE VIOLATED THE ROMULAN NEUTRAL ZONE.");

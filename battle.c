@@ -49,10 +49,10 @@ void cloak(void) {
 
     if (action==CLOFF) {
         if (irhere && d.date >= ALGERON && !isviolreported) {
-            prout("Spock- \"Captain, the Treaty of Algeron is in effect.\n   Are you sure this is wise?\"");
+            prout("\033[34mSpock\033[37m- \"Captain, the Treaty of Algeron is in effect.\n   Are you sure this is wise?\"");
             if (ja() == 0) return;
         }
-		prout("Engineer Scott- \"Aye, Sir.\"");
+		prout("\033[31mEngineer Scott\033[37m- \"Aye, Sir.\"");
         iscloaked = FALSE;
         if (irhere && d.date >= ALGERON && !isviolreported) {
             prout("The Romulan ship discovers you are breaking the Treaty of Algeron!");
@@ -65,7 +65,7 @@ void cloak(void) {
 	}
 
 	if (damage[DCLOAK]!=0) {
-		prout("Engineer Scott- \"The cloaking device is damaged, Sir.\"");
+		prout("\033[31mEngineer Scott\033[37m- \"The cloaking device is damaged, Sir.\"");
 		return;
 	}
 
@@ -76,13 +76,13 @@ void cloak(void) {
 
 	if (d.date >= ALGERON && !isviolreported)
 	{
-		prout("Spock- \"Captain, using the cloaking device is be a violation");
+		prout("\033[34mSpock\033[37m- \"Captain, using the cloaking device is be a violation");
 		prout("  of the Treaty of Algeron. Considering the alternatives,");
 		proutn("  are you sure this is wise?");
 		if (ja()==0) return;
 	}
 
-	prout("Engineer Scott- \"The cloaking device has been engaged, Sir.\"");
+	prout("\033[31mEngineer Scott\033[37m- \"The cloaking device has been engaged, Sir.\"");
 	iscloaking = TRUE;
     if (irhere && d.date >= ALGERON && !isviolreported) {
         prout("The Romulan ship discovers you are breaking the Treaty of Algeron!");
@@ -107,7 +107,7 @@ void sheild(int i) {
 			else {
 				chew();
 				if (damage[DSHIELD]) {
-					prout("Shields damaged and down.");
+					prout("\033[31mShields damaged and down\033[37m.");
 					return;
 				}
 				if (isit("up"))
@@ -224,11 +224,11 @@ void ram(int ibumpd, int ienm, int ix, int iy) {
 	double type = 1.0, extradm;
 	int icas, l;
 	
-	prouts("***RED ALERT!  RED ALERT!");
+	prouts("\033[31m***RED ALERT!  RED ALERT!");
 	skip(1);
 	prout("***COLLISION IMMINENT.");
 	skip(2);
-	proutn("***");
+	proutn("***\033[37m");
 	crmshp();
 	switch (ienm) {
 		case IHR: type = 1.5; break;
@@ -243,11 +243,11 @@ void ram(int ibumpd, int ienm, int ix, int iy) {
 	deadkl(ix, iy, ienm, sectx, secty);
 	proutn("***");
 	crmshp();
-	prout(" heavily damaged.");
+	prout(" \033[31mheavily damaged\033[37m.");
 	icas = 10.0+20.0*Rand();
-	proutn("***Sickbay reports ");
+	proutn("\033[34m***Sickbay reports \033[32m");
 	crami(icas, 1);
-	prout(" casualties.");
+	prout("\033[34m casualties\033[37m.");
 	casual += icas;
 	for (l=1; l <= ndevice; l++) {
 		if (l == DDRAY) continue; // Don't damage deathray 
@@ -383,7 +383,7 @@ void torpedo(double course, double r, int inx, int iny, double *hit) {
 				shoved = 1;
 				break;
 			case IHB: /* Hit a base */
-				prout("***STARBASE DESTROYED..");
+				prout("\033[31m***STARBASE DESTROYED..\033[37m");
 				if (starch[quadx][quady] < 0) starch[quadx][quady] = 0;
 				for (ll=1; ll<=d.rembase; ll++) {
 					if (d.baseqx[ll]==quadx && d.baseqy[ll]==quady) {
@@ -401,7 +401,7 @@ void torpedo(double course, double r, int inx, int iny, double *hit) {
 				return;
 			case IHP: /* Hit a planet */
 				crmena(1, iquad, 2, ix, iy);
-				prout(" destroyed.");
+				prout(" \033[31mdestroyed\033[37m.");
 				d.nplankl++;
 				d.newstuf[quadx][quady] -= 1;
 				d.plnets[iplnet] = nulplanet;
@@ -423,11 +423,11 @@ void torpedo(double course, double r, int inx, int iny, double *hit) {
 				return;
 			case IHQUEST: /* Hit a thingy */
 				skip(1);
-				prouts("AAAAIIIIEEEEEEEEAAAAAAAAUUUUUGGGGGHHHHHHHHHHHH!!!");
+				prouts("\033[33mAAAAIIIIEEEEEEEEAAAAAAAAUUUUUGGGGGHHHHHHHHHHHH!!!\033[37m");
 				skip(1);
 				prouts("    HACK!     HACK!    HACK!        *CHOKE!*  ");
 				skip(1);
-				proutn("Mr. Spock-");
+				proutn("\033[34mMr. Spock\033[37m-");
 				prouts("  \"Facinating!\"");
 				skip(1);
 				quad[ix][iy] = IHDOT;
@@ -439,7 +439,7 @@ void torpedo(double course, double r, int inx, int iny, double *hit) {
 				return;
 			case IHWEB: /* hit the web */
 				skip(1);
-				prout("***Torpedo absorbed by Tholian web.");
+				prout("\033[35m***Torpedo absorbed by Tholian web\033[37m.");
 				return;
 			case IHT:  /* Hit a Tholian */
 				skip(1);
@@ -449,7 +449,7 @@ void torpedo(double course, double r, int inx, int iny, double *hit) {
 					 fabs(sin(bullseye-angle));
 				h1 = fabs(h1);
 				if (h1 >= 600) {
-					prout(" destroyed.");
+					prout(" \033[31mdestroyed\033[37m.");
 					quad[ix][iy] = IHDOT;
 					ithere = 0;
 					ithx = ithy = 0;
@@ -459,7 +459,7 @@ void torpedo(double course, double r, int inx, int iny, double *hit) {
 					prout(" survives photon blast.");
 					return;
 				}
-				prout(" disappears.");
+				prout(" \033[34mdisappears\033[37m.");
 				quad[ix][iy] = IHWEB;
 				ithere = ithx = ithy = 0;
 				{
@@ -501,7 +501,7 @@ static void fry(double hit) {
 	if (hit < (275.0-25.0*skill)*(1.0+0.5*Rand())) return;
 
 	ncrit = 1.0 + hit/(500.0+100.0*Rand());
-	proutn("***CRITICAL HIT--");
+	proutn("\033[31m***CRITICAL HIT--\033[37m");
 	/* Select devices and cause damage */
 	for (l = 1; l <= ncrit; l++) {
 		do {
@@ -526,13 +526,13 @@ static void fry(double hit) {
 	}
 	prout(" damaged.");
 	if (damage[DSHIELD] && shldup) {
-		prout("***Shields knocked down.");
+		prout("\033[33m***Shields knocked down\033[37m.");
 		shldup=0;
 	}
 #ifdef CLOAKING
 	if (damage[DCLOAK] && iscloaked)
 	{
-		prout("***Cloaking device rendered inoperative.");
+		prout("\033[31m***Cloaking device rendered inoperative\033[37m.");
 		iscloaked = FALSE;
 	}
 #endif
@@ -592,7 +592,7 @@ void attack(int k) {
 		else { /* Enemy used photon torpedo */
 			double course = 1.90985*atan2((double)secty-jy, (double)jx-sectx);
 			hit = 0;
-			proutn("***TORPEDO INCOMING");
+			proutn("\033[33m***TORPEDO INCOMING\033[37m");
 			if (damage[DSRSENS] <= 0.0) {
 				proutn(" From ");
 				crmena(0, iquad, i, jx, jy);
@@ -648,7 +648,7 @@ void attack(int k) {
 		return;
 	}
 	if (attempt == 0 && condit == IHDOCKED)
-		prout("***Enemies decide against attacking your ship.");
+		prout("\033[33m***Enemies decide against attacking your ship\033[37m.");
 	if (atackd == 0) return;
 	percent = 100.0*pfac*shield+0.5;
 	if (ihurt==0) {
@@ -674,9 +674,9 @@ void attack(int k) {
 		int icas= hittot*Rand()*0.015;
 		if (icas >= 2) {
 			skip(1);
-			proutn("Mc Coy-  \"Sickbay to bridge.  We suffered ");
+			proutn("\033[34mMcCoy\033[37m-  \"Sickbay to bridge.  We suffered \033[32m");
 			crami(icas, 1);
-			prout(" casualties");
+			prout("\033[37m casualties");
 			prout("   in that last attack.\"");
 			casual += icas;
 		}
@@ -738,7 +738,7 @@ void deadkl(int ix, int iy, int type, int ixx, int iyy) {
 	}
 
 	/* For each kind of enemy, finish message to player */
-	prout(" destroyed.");
+	prout(" \033[31mdestroyed\033[37m.");
 	quad[ix][iy] = IHDOT;
 	if (d.remkl==0) return;
 
@@ -778,7 +778,7 @@ static int targetcheck(double x, double y, double *course) {
 	delty = 0.1*(sectx - x);
 	if (deltx==0 && delty== 0) {
 		skip(1);
-		prout("Spock-  \"Bridge to sickbay.  Dr. McCoy,");
+		prout("\033[34mSpock\033[37m-  \"Bridge to sickbay.  Dr. McCoy,");
 		prout("  I recommend an immediate review of");
 		prout("  the Captain's psychological profile.");
 		chew();
@@ -796,7 +796,7 @@ void photon(void) {
 	ididit = 0;
 
 	if (damage[DPHOTON]) {
-		prout("Photon tubes damaged.");
+		prout("\033[33mPhoton tubes damaged\033[37m.");
 		chew();
 		return;
 	}
@@ -891,17 +891,17 @@ void photon(void) {
 			/* misfire! */
 			r = (Rand()+1.2) * r;
 			if (n>1) {
-				prouts("***TORPEDO NUMBER");
+				prouts("\033[31m***TORPEDO NUMBER\033[32m");
 				crami(i, 2);
-				prouts(" MISFIRES.");
+				prouts("\033[31m MISFIRES\033[37m.");
 			}
-			else prouts("***TORPEDO MISFIRES.");
+			else prouts("\033[31m***TORPEDO MISFIRES\033[37m.");
 			skip(1);
 			if (i < n)
 				prout("  Remainder of burst aborted.");
 			osuabor=1;
 			if (Rand() <= 0.2) {
-				prout("***Photon tubes damaged by misfire.");
+				prout("\033[31m***Photon tubes damaged by misfire\033[37m.");
 				damage[DPHOTON] = damfac*(1.0+2.0*Rand());
 				break;
 			}
@@ -934,7 +934,7 @@ static void overheat(double rpow) {
 	if (rpow > 1500) {
 		double chekbrn = (rpow-1500.)*0.00038;
 		if (Rand() <= chekbrn) {
-			prout("Weapons officer Sulu-  \"Phasers overheated, sir.\"");
+			prout("\033[31mWeapons officer Sulu\033[37m-  \"Phasers overheated, sir.\"");
 			damage[DPHASER] = damfac*(1.0 + Rand()) * (1.0+chekbrn);
 		}
 	}
@@ -950,30 +950,30 @@ static int checkshctrl(double rpow) {
 		return 0;
 	}
 	/* Something bad has happened */
-	prouts("***RED ALERT!  RED ALERT!");
+	prouts("\033[31m***RED ALERT!  RED ALERT!\033[37m");
 	skip(2);
 	hit = rpow*shield/inshld;
 	energy -= rpow+hit*0.8;
 	shield -= hit*0.2;
 	if (energy <= 0.0) {
-		prouts("Sulu-  \"Captain! Shield malf***********************\"");
+		prouts("\033[31mSulu\033[37m-  \"Captain! Shield malf\033[35m***********************\033[37m\"");
 		skip(1);
 		stars();
 		finish(FPHASER);
 		return 1;
 	}
-	prouts("Sulu-  \"Captain! Shield malfunction! Phaser fire contained!\"");
+	prouts("\033[31mSulu\033[37m-  \"Captain! Shield malfunction! Phaser fire contained!\"");
 	skip(2);
-	prout("Lt. Uhura-  \"Sir, all decks reporting damage.\"");
+	prout("\033[31mLt. Uhura\033[37m-  \"Sir, all decks reporting damage.\"");
 	icas = hit*Rand()*0.012;
 	skip(1);
 	fry(0.8*hit);
 	if (icas) {
 		skip(1);
-		prout("McCoy to bridge- \"Severe radiation burns, Jim.");
-		proutn("  ");
+		prout("\033[34mMcCoy\033[37m to bridge- \"Severe radiation burns, Jim.");
+		proutn("  \033[32m");
 		crami(icas, 1);
-		prout(" casualties so far.\"");
+		prout("\033[37m casualties so far.\"");
 		casual += icas; // Changed from -=, October 2013
 	}
 	skip(1);
@@ -1000,7 +1000,7 @@ void phasers(void) {
 		return;
 	}
 	if (damage[DPHASER] != 0) {
-		prout("Phaser control damaged.");
+		prout("\033[31mPhaser control damaged\033[37m.");
 		chew();
 		return;
 	}
@@ -1015,7 +1015,7 @@ void phasers(void) {
 			chew();
 			return;
 		}
-		prout("Weapons Officer Sulu-  \"High-speed shield control enabled, sir.\"");
+		prout("\033[31mWeapons Officer Sulu\033[37m-  \"High-speed shield control enabled, sir.\"");
 		ifast = 1;
 		
 	}
@@ -1139,9 +1139,9 @@ void phasers(void) {
 			}
 			if (extra > 0 && alldone == 0) {
 				if (ithere) {
-					proutn("*** Tholian web absorbs ");
+					proutn("\033[33m*** Tholian web absorbs ");
 					if (nenhere>0) proutn("excess ");
-					prout("phaser energy.");
+					prout("phaser energy\033[37m.");
 				}
 				else {
 					cramf(extra, 0, 2);
@@ -1154,14 +1154,14 @@ void phasers(void) {
 			chew();
 			key = IHEOL;
 			if (damage[DCOMPTR]!=0)
-				prout("Battle computer damaged, manual file only.");
+				prout("\033[31mBattle computer damaged, manual file only\033[37m.");
 			else {
 				skip(1);
-				prouts("---WORKING---");
+				prouts("\033[35m---WORKING---\033[37m");
 				skip(1);
-				prout("Short-range-sensors-damaged");
+				prout("\033[33mShort-range-sensors-damaged");
 				prout("Insufficient-data-for-automatic-phaser-fire");
-				prout("Manual-fire-must-be-used");
+				prout("Manual-fire-must-be-used\033[37m");
 				skip(1);
 			}
 		case MANUAL:
@@ -1264,7 +1264,7 @@ void phasers(void) {
 		skip(1);
 		if (no == 0) {
 			if (Rand() >= 0.99) {
-				prout("Sulu-  \"Sir, the high-speed shield control has malfunctioned . . .");
+				prout("\033[31mSulu\033[37m-  \"Sir, the high-speed shield control has malfunctioned . . .");
 				prouts("         CLICK   CLICK   POP  . . .");
 				prout(" No  response, sir!");
 				shldup = 0;
@@ -1313,7 +1313,7 @@ void hittem(double *hits) {
 		else /* decide whether or not to emasculate klingon */
 			if (kpow > 0 && Rand() >= 0.9 &&
 				kpow <= ((0.4 + 0.4*Rand())*kpini)) {
-				proutn("***Mr. Spock-  \"Captain, the vessel at");
+				proutn("\033[33m***\033[34mMr. Spock\033[37m-  \"Captain, the vessel at");
 				cramlc(2,ii,jj);
 				skip(1);
 				prout("   has just lost its firepower.\"");
@@ -1389,12 +1389,12 @@ void
 	}
 
 	if (!REPORTS) {
-		printf("Uhura- \"We have no subspace radio communication, sir.\"\n");
+		printf("\033[31mUhura\033[37m- \"We have no subspace radio communication, sir.\"\n");
 		return;
 	}
 
 	if (damage[DTRANSP] != 0) {
-		printf("Scotty- \"Transporter damaged, sir.\"\n");
+		printf("\033[31mScotty\033[37m- \"Transporter damaged, sir.\"\n");
 		return;
 	}
 
@@ -1403,7 +1403,7 @@ void
 	/* find out if there are any at all */
 	if (klhere < 1)
 	{
-		printf("Uhura- \"Getting no response, sir.\"\n");
+		printf("\033[31mUhura\033[37m- \"Getting no response, sir.\"\n");
 		return;
 	}
 
@@ -1430,14 +1430,14 @@ void
 		printf("Klingon captain at %d,%d surrenders\n", kx[k], ky[k]);
 		i = 200*Rand();
 		if ( i > 0 )
-			printf("%d Klingons commit suicide rather than be taken captive\n", 200 - i);
+			printf("\033[32m%d\033[37m Klingons commit suicide rather than be taken captive\n", 200 - i);
 		if (i > brigfree)
 		{
-			printf("%d Klingons die because there is no room for them in the brig.\n", i-brigfree);
+			printf("\033[32m%d\033[37m Klingons die because there is no room for them in the brig.\n", i-brigfree);
 			i = brigfree;
 		}
 		brigfree -= i;
-		printf("%d captives taken\n", i);
+		printf("\033[32m%d\033[37m captives taken\n", i);
 		deadkl(kx[k], ky[k], quad[kx[k]][ky[k]], kx[k], ky[k]);
 		if (d.remkl==0) finish(FWON);
 		return;

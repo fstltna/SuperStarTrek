@@ -154,7 +154,7 @@ static void helpme(void) {
 	/* fp = fopen("/opt/sst/sst.doc", "r"); */
 	fp = fopen("sst.doc", "r");
 	if (fp == NULL) {
-		prout("Spock-  \"Captain, that information is missing from the");
+		prout("\033[34mSpock\033[37m-  \"Captain, that information is missing from the");
 		prout("   computer. You need to find SST.DOC and put it in the");
 		prout("   current directory.\"");
 		return;
@@ -162,14 +162,14 @@ static void helpme(void) {
 	i = strlen(cmdbuf);
 	do {
 		if (fgets(linebuf, 132, fp) == NULL) {
-			prout("Spock- \"Captain, there is no information on that command.\"");
+			prout("\033[34mSpock\033[37m- \"Captain, there is no information on that command.\"");
 			fclose(fp);
 			return;
 		}
 	} while (strncmp(linebuf, cmdbuf, i) != 0);
 
 	skip(1);
-	prout("Spock- \"Captain, I've found the following information:\"");
+	prout("\033[34mSpock\033[37m- \"Captain, I've found the following information:\"");
 	skip(1);
 
 	do {
@@ -193,7 +193,7 @@ static void makemoves(void) {
 		while (TRUE)  { /* get a command */
 			chew();
 			skip(1);
-			proutn("COMMAND> ");
+			proutn("\033[32mCOMMAND\033[37m> ");
 			if (scan() == IHEOL) continue;
 			for (i=0; i < 29; i++) // Abbreviations allowed for the first 29 commands, only.
 				if (isit(commands[i]))
@@ -217,10 +217,10 @@ static void makemoves(void) {
 			   ) break;
 
 			if (skill <= SFAIR)  {
-				prout("UNRECOGNIZED COMMAND. LEGAL COMMANDS ARE:");
+				prout("\033[33mUNRECOGNIZED COMMAND\033[37m. \033[32mLEGAL COMMANDS ARE\033[37m:");
 				listCommands(TRUE);
 			}
-			else prout("UNRECOGNIZED COMMAND.");
+			else prout("\033[33mUNRECOGNIZED COMMAND\033[37m.");
 		}
 		switch (i) { /* command switch */
 			case 0:			// srscan
@@ -696,7 +696,7 @@ void prouts(char *s) {
 void huh(void) {
 	chew();
 	skip(1);
-	prout("Beg your pardon, Captain?");
+	prout("\033[33mBeg your pardon, Captain?\033[37m");
 }
 
 int isit(char *s) {

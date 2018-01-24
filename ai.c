@@ -353,7 +353,7 @@ static int checkdest(int iqx, int iqy, int flag, int *ipage) {
 			if (REPORTS) {
 				if (*ipage==0) pause(1);
 				*ipage = 1;
-				prout("Lt. Uhura-  \"Captain, Starfleet Intelligence reports");
+				prout("\033[31mLt. Uhura\033[37m-  \"Captain, Starfleet Intelligence reports");
 				proutn("   a planet in");
 				cramlc(1, d.isx, d.isy);
 				prout(" has been destroyed");
@@ -515,7 +515,7 @@ void scom(int *ipage) {
 			iseenit = 1;
 			if (*ipage == 0)  pause(1);
 			*ipage=1;
-			proutn("Lt. Uhura-  \"Captain, the starbase in");
+			proutn("\033[31mLt. Uhura\033[37m-  \"Captain, the starbase in");
 			cramlc(1, d.isx, d.isy);
 			skip(1);
 			prout("   reports that it is under attack from the Klingon Super-commander.");
@@ -541,7 +541,7 @@ void scom(int *ipage) {
 		return;
 	if (*ipage==0) pause(1);
 	*ipage = 1;
-	prout("Lt. Uhura-  \"Captain, Starfleet Intelligence reports");
+	prout("\033[31mLt. Uhura\033[37m-  \"Captain, Starfleet Intelligence reports");
 	proutn("   the Super-commander is in");
 	cramlc(1, d.isx, d.isy);
 	prout(".\"");

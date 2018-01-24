@@ -9,7 +9,7 @@ void lmove(void) {
 	int trbeam = 0, n, l, ix, iy, kink, kinks, iquad;
 
 	if (inorbit) {
-		prout("SULU- \"Leaving standard orbit.\"");
+		prout("\033[31mSULU\033[37m- \"Leaving standard orbit.\"");
 		inorbit = 0;
 	}
 
@@ -144,7 +144,7 @@ void lmove(void) {
 						break;
 					case IHBLANK:
 						skip(1);
-						prouts("***RED ALERT!  RED ALERT!");
+						prouts("\033[31m***RED ALERT!  RED ALERT!\033[37m");
 						skip(1);
 						proutn("***");
 						crmshp();
@@ -163,9 +163,9 @@ void lmove(void) {
 							proutn(" blocked by object at");
 						cramlc(2, ix,iy);
 						prout(";");
-						proutn("Emergency stop required ");
+						proutn("Emergency stop required \033[32m");
 						cramf(stopegy, 0, 2);
-						prout(" units of energy.");
+						prout("\033[37m units of energy.");
 						energy -= stopegy;
 						finalx = x-deltax+0.5;
 						sectx = finalx;
@@ -237,7 +237,7 @@ void dock(void) {
 #ifdef CAPTURE
     if (brigcapacity-brigfree > 0)
     {
-        printf("%d captured Klingons transferred to base.\n", brigcapacity-brigfree);
+        printf("\033[32m%d\033[37m captured Klingons transferred to base.\n", brigcapacity-brigfree);
         kcaptured += brigcapacity-brigfree;
         brigfree = brigcapacity;
     }
@@ -245,7 +245,7 @@ void dock(void) {
 	if (stdamtim != 1e30 &&
 		(future[FCDBAS] < 1e30 || isatb == 1) && iseenit == 0) {
 		/* get attack report from base */
-		prout("Lt. Uhura- \"Captain, an important message from the starbase:\"");
+		prout("\033[31mLt. Uhura\033[37m- \"Captain, an important message from the starbase:\"");
 		attakreport();
 		iseenit = 1;
 	}
@@ -282,9 +282,9 @@ static void getcd(int isprobe, int akey) {
 	while (automatic == -1) {
 		if (damage[DCOMPTR]) {
 			if (isprobe)
-				prout("Computer damaged; manual navigation only");
+				prout("\033[33mComputer damaged; manual navigation only\033[37m");
 			else
-				prout("Computer damaged; manual movement only");
+				prout("\033[33mComputer damaged; manual movement only\033[37m");
 			chew();
 			automatic = 0;
 			key = IHEOL;
@@ -390,12 +390,12 @@ static void getcd(int isprobe, int akey) {
 		if (!isprobe) {
 			if (itemp) {
 				if (iprompt) {
-					proutn("Helmsman Sulu- \"Course locked in for");
+					proutn("\033[31mHelmsman Sulu\033[37m- \"Course locked in for");
 					cramlc(2, irows, icols);
 					prout(".\"");
 				}
 			}
-			else prout("Ensign Chekov- \"Course laid in, Captain.\"");
+			else prout("\033[33mEnsign Chekov\033[37m- \"Course laid in, Captain.\"");
 		}
 		deltax = icolq - quady + 0.1*(icols-secty);
 		deltay = quadx - irowq + 0.1*(sectx-irows);
@@ -436,7 +436,7 @@ static void getcd(int isprobe, int akey) {
 	}
 	if (itemp == 2 && !isprobe) {
 		skip(1);
-		prout("Helmsman Sulu- \"Aye, Sir.\"");
+		prout("\033[31mHelmsman Sulu\033[37m- \"Aye, Sir.\"");
 	}
 	dist = sqrt(deltax*deltax + deltay*deltay);
 	direc = atan2(deltax, deltay)*1.90985932;
@@ -455,7 +455,7 @@ void impuls(void) {
 	if (damage[DIMPULS]) {
 		chew();
 		skip(1);
-		prout("Engineer Scott- \"The impulse engines are damaged, Sir.\"");
+		prout("\033[31mEngineer Scott\033[37m- \"The impulse engines are damaged, Sir.\"");
 		return;
 	}
 
@@ -470,7 +470,7 @@ void impuls(void) {
 	if (power >= energy) {
 		/* Insufficient power for trip */
 		skip(1);
-		prout("First Officer Spock- \"Captain, the impulse engines");
+		prout("\033[34mFirst Officer Spock\033[37m- \"Captain, the impulse engines");
 		prout("require 20.0 units to engage, plus 100.0 units per");
 		if (energy > 30) {
 			proutn("quadrant.  We can go, therefore, a maximum of ");
@@ -486,7 +486,7 @@ void impuls(void) {
 	/* Make sure enough time is left for the trip */
 	Time = dist/0.095;
 	if (Time >= d.remtime) {
-		prout("First Officer Spock- \"Captain, our speed under impulse");
+		prout("\033[34mFirst Officer Spock\033[37m- \"Captain, our speed under impulse");
 		prout("power is only 0.95 sectors per stardate. Are you sure");
 		prout("we dare spend the time?\"");
 		if (ja() == 0) { Time = 0.0; return;}
@@ -514,20 +514,20 @@ void warp(int i) {
 		if (iscloaked) {
 			chew();
 			skip(1);
-			prout("Engineer Scott- \"The warp engines can better not be used while cloaked, Sir.\"");
+			prout("\033[31mEngineer Scott\033[37m- \"The warp engines can better not be used while cloaked, Sir.\"");
 			return;
 		}
 #endif
 		if (damage[DWARPEN] > 10.0) {
 			chew();
 			skip(1);
-			prout("Engineer Scott- \"The warp engines are damaged, Sir.\""); // Was "Impulse" 10/2013
+			prout("\033[31mEngineer Scott\033[37m- \"The warp engines are damaged, Sir.\""); // Was "Impulse" 10/2013
 			return;
 		}
 		if (damage[DWARPEN] > 0.0 && warpfac > 4.0) {
 			chew();
 			skip(1);
-			prout("Engineer Scott- \"Sorry, Captain. Until this damage");
+			prout("\033[31mEngineer Scott\033[37m- \"Sorry, Captain. Until this damage");
 			prout("  is repaired, I can only give you warp 4.\"");
 			return;
 		}
@@ -548,19 +548,19 @@ void warp(int i) {
 			if (shldup==0 || 0.5*power > energy) {
 				iwarp = pow((energy/(dist+0.05)), 0.333333333);
 				if (iwarp <= 0) {
-					prout("We can't do it, Captain. We haven't the energy.");
+					prout("\033[33mWe can't do it, Captain. We haven't the energy\033[37m.");
 				}
 				else {
-					proutn("We haven't the energy, but we could do it at warp ");
+					proutn("We haven't the energy, but we could do it at warp \033[32m");
 					crami(iwarp, 1);
 					if (shldup)
-						prout(",\nif you'll lower the shields.");
+						prout("\033[37m,\nif you'll lower the shields.");
 					else
-						prout(".");
+						prout("\033[37m.");
 				}
 			}
 			else
-				prout("We haven't the energy to go that far with the shields up.");
+				prout("\033[33mWe haven't the energy to go that far with the shields up\033[37m.");
 			return;
 		}
 						
@@ -568,10 +568,10 @@ void warp(int i) {
 		Time = 10.0*dist/wfacsq;
 		if (Time >= 0.8*d.remtime) {
 			skip(1);
-			prout("First Officer Spock- \"Captain, I compute that such");
-			proutn("  a trip would require approximately ");
+			prout("\033[34mFirst Officer Spock\033[37m- \"Captain, I compute that such");
+			proutn("  a trip would require approximately \033[32m");
 			cramf(100.0*Time/d.remtime, 0, 2);
-			prout(" percent of our");
+			prout("\033[37m percent of our");
 			prout("  remaining time.  Are you sure this is wise?\"");
 			if (ja() == 0) { Time = 0.0; return;}
 		}
@@ -661,40 +661,40 @@ void setwrp(void) {
 		return;
 	}
 	if (damage[DWARPEN] > 10.0) {
-		prout("Warp engines inoperative.");
+		prout("\033[31mWarp engines inoperative\033[37m.");
 		return;
 	}
 	if (damage[DWARPEN] > 0.0 && aaitem > 4.0) {
-		prout("Engineer Scott- \"I'm doing my best, Captain,\n"
+		prout("\033[31mEngineer Scott\033[37m- \"I'm doing my best, Captain,\n"
 			  "  but right now we can only go warp 4.\"");
 		return;
 	}
 	if (aaitem > 10.0) {
-		prout("Helmsman Sulu- \"Our top speed is warp 10, Captain.\"");
+		prout("\033[31mHelmsman Sulu\033[37m- \"Our top speed is warp 10, Captain.\"");
 		return;
 	}
 	if (aaitem < 1.0) {
-		prout("Helmsman Sulu- \"We can't go below warp 1, Captain.\"");
+		prout("\033[31mHelmsman Sulu\033[37m- \"We can't go below warp 1, Captain.\"");
 		return;
 	}
 	oldfac = warpfac;
 	warpfac = aaitem;
 	wfacsq=warpfac*warpfac;
 	if (warpfac <= oldfac || warpfac <= 6.0) {
-		proutn("Helmsman Sulu- \"Warp factor ");
+		proutn("\033[31mHelmsman Sulu\033[37m- \"Warp factor \033[32m");
 		cramf(warpfac, 0, 1);
-		prout(", Captain.\"");
+		prout("\033[37m, Captain.\"");
 		return;
 	}
 	if (warpfac < 8.00) {
-		prout("Engineer Scott- \"Aye, but our maximum safe speed is warp 6.\"");
+		prout("\033[31mEngineer Scott\033[37m- \"Aye, but our maximum safe speed is warp 6.\"");
 		return;
 	}
 	if (warpfac == 10.0) {
-		prout("Engineer Scott- \"Aye, Captain, we'll try it.\"");
+		prout("\033[31mEngineer Scott\033[37m- \"Aye, Captain, we'll try it.\"");
 		return;
 	}
-	prout("Engineer Scott- \"Aye, Captain, but our engines may not take it.\"");
+	prout("\033[31mEngineer Scott\033[37m- \"Aye, Captain, but our engines may not take it.\"");
 	return;
 }
 
@@ -715,19 +715,19 @@ void atover(int igrab) {
 		}
 		prouts("His desperate attempt to rescue you . . .");
 		if (Rand() <= 0.5) {
-			prout("fails.");
+			prout("\033[31mfails\033[37m.");
 			finish(FPNOVA);
 			return;
 		}
-		prout("SUCCEEDS!");
+		prout("\033[32mSUCCEEDS\033[37m!");
 		if (imine) {
 			imine = 0;
 			proutn("The crystals mined were ");
 			if (Rand() <= 0.25) {
-				prout("lost.");
+				prout("\033[31mlost\033[37m.");
 			}
 			else {
-				prout("saved.");
+				prout("\033[32msaved\033[37m.");
 				icrystl = 1;
 			}
 		}
@@ -742,7 +742,7 @@ void atover(int igrab) {
 	skip(1);
 	do {
 		if (justin) {
-			prouts("***RED ALERT!  RED ALERT!");
+			prouts("\033[31m***RED ALERT!  RED ALERT!\033[37m");
 			skip(1);
 			proutn("The ");
 			crmshp();
@@ -750,16 +750,16 @@ void atover(int igrab) {
 			prouts("   a supernova.");
 			skip(2);
 		}
-		proutn("***Emergency automatic override attempts to hurl ");
+		proutn("\033[31m***Emergency automatic override attempts to hurl ");
 		crmshp();
 		skip(1);
-		prout("safely out of quadrant.");
+		prout("safely out of quadrant\033[37m.");
 		starch[quadx][quady] = damage[DRADIO] > 0.0 ? d.galaxy[quadx][quady]+1000:1;
 
 		/* Try to use warp engines */
 		if (damage[DWARPEN]) {
 			skip(1);
-			prout("Warp engines damaged.");
+			prout("\033[31mWarp engines damaged\033[37m.");
 			finish(FSNOVAED);
 			return;
 		}
@@ -781,7 +781,7 @@ void atover(int igrab) {
 			/* This is bad news, we didn't leave quadrant. */
 			if (alldone) return;
 			skip(1);
-			prout("Insufficient energy to leave quadrant.");
+			prout("\033[33mInsufficient energy to leave quadrant\033[37m.");
 			finish(FSNOVAED);
 			return;
 		}
@@ -792,7 +792,7 @@ void atover(int igrab) {
 
 void timwrp() {
 	int l, ll, gotit;
-	prout("***TIME WARP ENTERED.");
+	prout("\033[34m***TIME WARP ENTERED.\033[37m");
 	if (d.snap && Rand() < 0.5) {
 		/* Go back in time */
 		proutn("You are traveling backwards in time ");
@@ -819,7 +819,7 @@ void timwrp() {
 			if (d.plnets[l].known == 2) {
 				gotit = 1;
 				if (iscraft==1 && ship==IHE) {
-					prout("Checkov-  \"Security reports the Galileo has disappeared, Sir!");
+					prout("\033[33mCheckov\033[37m-  \"Security reports the Galileo has disappeared, Sir!");
 					iscraft = 0;
 				}
 			}
@@ -827,7 +827,7 @@ void timwrp() {
 		/* Likewise, if in the original time the Galileo was abandoned, but
 		   was on ship earlier, it would have vanished -- lets restore it */
 		if (iscraft==0 && gotit==0 && damage[DSHUTTL] >= 0.0) {
-			prout("Checkov-  \"Security reports the Galileo has reappeared in the dock!\"");
+			prout("\033[33mCheckov\033[37m-  \"Security reports the Galileo has reappeared in the dock!\"");
 			iscraft = 1;
 		}
 
@@ -862,7 +862,7 @@ void probe(void) {
 		chew();
 		skip(1);
 		if (ship == IHE) 
-			prout("Engineer Scott- \"We have no more deep space probes, Sir.\"");
+			prout("\033[31mEngineer Scott\033[37m- \"We have no more deep space probes, Sir.\"");
 		else
 			prout("Ye Faerie Queene has no deep space probes.");
 		return;
@@ -870,16 +870,16 @@ void probe(void) {
 	if (damage[DDSP] != 0.0) {
 		chew();
 		skip(1);
-		prout("Engineer Scott- \"The probe launcher is damaged, Sir.\"");
+		prout("\033[31mEngineer Scott\033[37m- \"The probe launcher is damaged, Sir.\"");
 		return;
 	}
 	if (future[FDSPROB] != 1e30) {
 		chew();
 		skip(1);
 		if (REPORTS) {
-			prout("Uhura- \"The previous probe is still reporting data, Sir.\"");
+			prout("\033[31mUhura\033[37m- \"The previous probe is still reporting data, Sir.\"");
 		} else {
-			prout("Spock-  \"Records show the previous probe has not yet");
+			prout("\033[34mSpock\033[37m-  \"Records show the previous probe has not yet");
 			prout("   reached its destination.\"");
 		}
 		return;
@@ -922,7 +922,7 @@ void probe(void) {
 	probecx = quadx;
 	probecy = quady;
 	future[FDSPROB] = d.date + 0.01; // Time to move one sector
-	prout("Ensign Chekov-  \"The deep space probe is launched, Captain.\"");
+	prout("\033[33mEnsign Chekov\033[37m-  \"The deep space probe is launched, Captain.\"");
 	return;
 }
 
@@ -934,7 +934,7 @@ void help(void) {
 	chew();
 	/* Test for conditions which prevent calling for help */
 	if (condit == IHDOCKED) {
-		prout("Lt. Uhura-  \"But Captain, we're already docked.\"");
+		prout("\033[31mLt. Uhura\033[37m-  \"But Captain, we're already docked.\"");
 		return;
 	}
 	if (damage[DRADIO] != 0) {
@@ -942,7 +942,7 @@ void help(void) {
 		return;
 	}
 	if (d.rembase==0) {
-		prout("Lt. Uhura-  \"Captain, I'm not getting any response from Starbase.\"");
+		prout("\033[31mLt. Uhura\033[37m-  \"Captain, I'm not getting any response from Starbase.\"");
 		return;
 	}
 	if (landed == 1) {
@@ -990,7 +990,7 @@ void help(void) {
 		crmshp();
 		prouts(" . . . . . ");
 		if (Rand() > probf) break;
-		prout("fails.");
+		prout("\033[31mfails\033[37m.");
 	}
 	if (l > 3) {
 		finish(FMATERIALIZE);
@@ -1002,13 +1002,13 @@ void help(void) {
 		iy = basey+3.0*Rand()-1;
 		if (ix>=1 && ix<=10 && iy>=1 && iy<=10 && quad[ix][iy]==IHDOT) {
 			/* found one -- finish up */
-			prout("succeeds.");
+			prout("\033[32msucceeds\033[37m.");
 			sectx=ix;
 			secty=iy;
 			quad[ix][iy]=ship;
 			dock();
 			skip(1);
-			prout("Lt. Uhura-  \"Captain, we made it!\"");
+			prout("\033[31mLt. Uhura\033[37m-  \"Captain, we made it!\"");
 			return;
 		}
 	}

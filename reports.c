@@ -5,20 +5,20 @@
 
 void attakreport(void) {
 	if (future[FCDBAS] < 1e30) {
-		proutn("Starbase in ");
+		proutn("\033[31mStarbase in \033[32m");
 		cramlc(1, batx, baty);
-		prout(" is currently under attack.");
-		proutn("It can hold out until Stardate ");
+		prout(" \033[31mis currently under attack.");
+		proutn("It can hold out until Stardate \033[32m");
 		cramf(future[FCDBAS], 0,1);
-		prout(".");
+		prout("\033[37m.");
 	}
 	if (isatb == 1) {
-		proutn("Starbase in ");
+		proutn("\033[31mStarbase in \033[32m");
 		cramlc(1, d.isx, d.isy);
-		prout(" is under Super-commander attack.");
-		proutn("It can hold out until Stardate ");
+		prout(" \033[31mis under Super-commander attack.");
+		proutn("It can hold out until Stardate \033[32m");
 		cramf(future[FSCDBAS], 0, 1);
-		prout(".");
+		prout("\033[37m.");
 	}
 }
 	
@@ -45,11 +45,11 @@ void report(int f) {
 	printf("\nYou %s playing a %s%s %s game.\n",
 		   alldone? "were": "are now", s1, s2, s3);
 	if (skill>SGOOD && thawed && !alldone) prout("No plaque is allowed.");
-	if (tourn) printf("This is tournament game %d.\n", tourn);
-	if (f) printf("Your secret password is \"%s\"\n",passwd);
-	printf("%d of %d Klingon ships have been destroyed",
+	if (tourn) printf("This is tournament game \033[32m%d\033[37m.\n", tourn);
+	if (f) printf("Your secret password is \"\033[31m%s\033[37m\"\n",passwd);
+	printf("\033[32m%d\033[37m of \033[32m%d\033[37m Klingon ships have been destroyed",
 		   d.killk+d.killc+d.nsckill, inkling);
-	if (d.killc) printf(", including %d Commander%s.\n", d.killc, d.killc==1?"":"s");
+	if (d.killc) printf(", including \033[32m%d\033[37m Commander%s.\n", d.killc, d.killc==1?"":"s");
 	else if (d.killk+d.nsckill > 0) prout(", but no Commanders.");
 	else prout(".");
 	if (skill > SFAIR) printf("The Super Commander has %sbeen destroyed.\n",
@@ -66,28 +66,28 @@ void report(int f) {
 		crami(d.rembase, 1);
 		prout(" remaining.");
 	}
-	else printf("There are %d bases.\n", inbase);
+	else printf("There are \033[32m%d\033[37m bases.\n", inbase);
 	if (REPORTS || iseenit) {
 		/* Don't report this if not seen and
 			either the radio is dead or not at base! */
 		attakreport();
 		iseenit = 1;
 	}
-	if (casual) printf("%d casualt%s suffered so far.\n",
+	if (casual) printf("\033[32m%d\033[37m casualt%s suffered so far.\n",
 					   casual, casual==1? "y" : "ies");
 #ifdef CAPTURE
-    if (brigcapacity != brigfree) printf("%d Klingon%s in brig.\n",
+    if (brigcapacity != brigfree) printf("\033[32m%d\033[37m Klingon%s in brig.\n",
     							brigcapacity-brigfree, brigcapacity-brigfree>1 ? "s" : "");
-    if (kcaptured > 0) printf("%d captured Klingon%s turned in to Star Fleet.\n", 
+    if (kcaptured > 0) printf("\033[32m%d\033[37m captured Klingon%s turned in to Star Fleet.\n", 
                                kcaptured, kcaptured>1 ? "s" : "");
 #endif
-	if (nhelp) printf("There were %d call%s for help.\n",
+	if (nhelp) printf("There were \033[32m%d\033[37m call%s for help.\n",
 					  nhelp, nhelp==1 ? "" : "s");
 	if (ship == IHE) {
-		proutn("You have ");
+		proutn("You have \033[32m");
 		if (nprobes) crami(nprobes,1);
 		else proutn("no");
-		proutn(" deep space probe");
+		proutn("\033[37m deep space probe");
 		if (nprobes!=1) proutn("s");
 		prout(".");
 	}
@@ -109,7 +109,7 @@ void report(int f) {
 				ai *= 2.0;
 				i++;
 			}
-			printf("Dilithium crystals have been used %d time%s.\n",
+			printf("Dilithium crystals have been used \033[32m%d\033[37m time%s.\n",
 				   i, i==1? "" : "s");
 		}
 	}
@@ -122,7 +122,7 @@ void lrscan(void) {
 	if (damage[DLRSENS] != 0.0) {
 		/* Now allow base's sensors if docked */
 		if (condit != IHDOCKED) {
-			prout("LONG-RANGE SENSORS DAMAGED.");
+			prout("\033[31mLONG-RANGE SENSORS DAMAGED\033[37m.");
 			return;
 		}
 		skip(1);
@@ -188,7 +188,7 @@ void dreprt(void) {
 			skip(1);
 		}
 	}
-	if (!jdam) prout("All devices functional.");
+	if (!jdam) prout("\033[32mAll devices functional\033[37m.");
 }
 
 void chart(int nn) {
@@ -197,11 +197,11 @@ void chart(int nn) {
 	chew();
 	skip(1);
 	if (stdamtim != 1e30 && stdamtim != d.date && condit == IHDOCKED) {
-		prout("Spock-  \"I revised the Star Chart from the");
+		prout("\033[34mSpock\033[37m-  \"I revised the Star Chart from the");
 		prout("  starbase's records.\"");
 		skip(1);
 	}
-	if (nn == 0) prout("STAR CHART FOR THE KNOWN GALAXY");
+	if (nn == 0) prout("\033[35mSTAR CHART FOR THE KNOWN GALAXY\033[37m");
 	if (stdamtim != 1e30) {
 		if (condit == IHDOCKED) {
 			/* We are docked, so restore chart from base information -- these values won't update! */
@@ -211,9 +211,9 @@ void chart(int nn) {
 					if (starch[i][j] == 1) starch[i][j] = d.galaxy[i][j]+1000;
 		}
 		else {
-			proutn("(Last surveillance update ");
+			proutn("(Last surveillance update \033[32m");
 			cramf(d.date-stdamtim, 0, 1);
-			prout(" stardates ago.)");
+			prout("\033[37m stardates ago.)");
 		}
 	}
 	if (nn ==0) skip(1);
@@ -272,7 +272,7 @@ void srscan(int l) {
 			if (damage[DSRSENS] != 0) {
 				/* Allow base's sensors if docked */
 				if (condit != IHDOCKED) {
-					prout("SHORT-RANGE SENSORS DAMAGED");
+					prout("\033[31mSHORT-RANGE SENSORS DAMAGED\033[37m");
 					goodScan=FALSE;
 				}
 				else
@@ -295,7 +295,7 @@ void srscan(int l) {
 				if (strncmp(citem,requests[k],min(2,strlen(citem)))==0)
 					break;
 			if (k > 10) {
-				prout("UNRECOGNIZED REQUEST. Legal requests are:\n"
+				prout("\033[33mUNRECOGNIZED REQUEST\033[37m. \033[32mLegal requests are\033[37m:\n"
 					 "  date, condition, position, lsupport, warpfactor,\n"
 					 "  energy, torpedoes, shields, klingons, time.");
 				return;
@@ -330,63 +330,63 @@ void srscan(int l) {
 		if (rightside) {
 			switch (jj) {
 				case 1:
-					printf(" Stardate      %.1f", d.date);
+					printf(" \033[1mStardate\033[0m      %.1f", d.date);
 					break;
 				case 2:
 					if (condit != IHDOCKED) newcnd();
 					switch (condit) {
-						case IHRED: cp = "RED"; break;
-						case IHGREEN: cp = "GREEN"; break;
-						case IHYELLOW: cp = "YELLOW"; break;
+						case IHRED: cp = "\033[31mRED\033[37m"; break;
+						case IHGREEN: cp = "\033[32mGREEN\033[37m"; break;
+						case IHYELLOW: cp = "\033[33mYELLOW\033[37m"; break;
 						case IHDOCKED: cp = "DOCKED"; break;
 					}
-					printf(" Condition     %s", cp);
+					printf(" \033[1mCondition\033[0m     %s", cp);
 #ifdef CLOAKING
-				    if (iscloaked) printf(", CLOAKED");
+				    if (iscloaked) printf(", \033[34mCLOAKED\033[37m");
 #endif
 					break;
 				case 3:
-					printf(" Position     ");
+					printf(" \033[1mPosition\033[0m     ");
 					cramlc(0, quadx, quady);
 					putchar(',');
 					cramlc(0, sectx, secty);
 					break;
 				case 4:
-					printf(" Life Support  ");
+					printf(" \033[1mLife Support\033[0m  ");
 					if (damage[DLIFSUP] != 0.0) {
 						if (condit == IHDOCKED)
-							printf("DAMAGED, supported by starbase");
+							printf("\033[31mDAMAGED\033[37m, supported by starbase");
 						else
-							printf("DAMAGED, reserves=%4.2f", lsupres);
+							printf("\033[31mDAMAGED\033[37m, reserves=%4.2f", lsupres);
 					}
 					else
-						printf("ACTIVE");
+						printf("\033[32mACTIVE\033[37m");
 					break;
 				case 5:
-					printf(" Warp Factor   %.1f", warpfac);
+					printf(" \033[1mWarp Factor\033[0m   %.1f", warpfac);
 					break;
 				case 6:
-					printf(" Energy        %.2f", energy);
+					printf(" \033[1mEnergy\033[0m        %.2f", energy);
 					break;
 				case 7:
-					printf(" Torpedoes     %d", torps);
+					printf(" \033[1mTorpedoes\033[0m     %d", torps);
 					break;
 				case 8:
-					printf(" Shields       ");
+					printf(" \033[1mShields\033[0m       ");
 					if (damage[DSHIELD] != 0)
-						printf("DAMAGED,");
+						printf("\033[31mDAMAGED\033[37m,");
 					else if (shldup)
-						printf("UP,");
+						printf("\033[32mUP\033[37m,");
 					else
-						printf("DOWN,");
+						printf("\033[34mDOWN\033[37m,");
 					printf(" %d%% %.1f units",
 						   (int)((100.0*shield)/inshld + 0.5), shield);
 					break;
 				case 9:
-					printf(" Klingons Left %d", d.remkl);
+					printf(" \033[1mKlingons Left\033[0m %d", d.remkl);
 					break;
 				case 10:
-					printf(" Time Left     %.2f", d.remtime);
+					printf(" \033[1mTime Left\033[0m     %.2f", d.remtime);
 					break;
 			}
 					
@@ -403,7 +403,7 @@ void eta(void) {
 	int wfl;
 	double ttime, twarp, tpower;
 	if (damage[DCOMPTR] != 0.0) {
-		prout("COMPUTER DAMAGED, USE A POCKET CALCULATOR.");
+		prout("\033[31mCOMPUTER DAMAGED, USE A POCKET CALCULATOR\033[37m.");
 		skip(1);
 		return;
 	}
@@ -455,7 +455,7 @@ void eta(void) {
 			if (ttime > d.date) ttime -= d.date; // Actually a star date
 			if (ttime <= 1e-10 ||
 				(twarp=(floor(sqrt((10.0*dist)/ttime)*10.0)+1.0)/10.0) > 10) {
-				prout("We'll never make it, sir.");
+				prout("\033[33mWe'll never make it, sir\033[37m.");
 				chew();
 				return;
 			}
@@ -473,16 +473,16 @@ void eta(void) {
 			}
 			break;
 		}
-		prout("Captain, certainly you can give me one of these.");
+		prout("\033[35mCaptain, certainly you can give me one of these\033[37m.");
 	}
 	while (TRUE) {
 		chew();
 		ttime = (10.0*dist)/square(twarp);
 		tpower = dist*twarp*twarp*twarp*(shldup+1);
 		if (tpower >= energy) { // Suggestion from Ethan Staffin -- give amount needed
-			prout("Insufficient energy, sir: we would need ");
+			prout("\033[31mInsufficient energy, sir: we would need \033[32m");
 			cramf(tpower, 1, 1);
-			proutn (" units.");
+			proutn (" \033[31munits\033[37m.");
 			if (shldup==0 || tpower > energy*2.0) {
 				if (!wfl) return;
 				proutn("New warp factor to try? ");
@@ -511,28 +511,28 @@ void eta(void) {
 		cramf(energy-tpower, 1, 1);
 		prout(".");
 		if (wfl) {
-			proutn("And we will arrive at stardate ");
+			proutn("\033[33mAnd we will arrive at stardate \033[32m");
 			cramf(d.date+ttime, 1, 1);
-			prout(".");
+			prout("\033[37m.");
 		}
 		else if (twarp==1.0)
-			prout("Any warp speed is adequate.");
+			prout("\033[32mAny warp speed is adequate\033[37m.");
 		else {
-			proutn("Minimum warp needed is ");
+			proutn("\033[33mMinimum warp needed is \033[32m");
 			cramf(twarp, 1, 2);
 			skip(1);
-			proutn("and we will arrive at stardate ");
+			proutn("\033[33mand we will arrive at stardate \033[32m");
 			cramf(d.date+ttime, 1, 2);
-			prout(".");
+			prout("\033[37m.");
 		}
 		if (d.remtime < ttime)
-			prout("Unfortunately, the Federation will be destroyed by then.");
+			prout("\033[31mUnfortunately, the Federation will be destroyed by then\033[37m.");
 		if (twarp > 6.0)
-			prout("You'll be taking risks at that speed, Captain");
+			prout("\033[33mYou'll be taking risks at that speed, Captain\033[37m");
 		if ((isatb==1 && d.isy == ix1 && d.isx == iy1 &&
 			 future[FSCDBAS]< ttime+d.date)||
 			(future[FCDBAS]<ttime+d.date && baty==ix1 && batx == iy1))
-			prout("The starbase there will be destroyed by then.");
+			prout("\033[31mThe starbase there will be destroyed by then\033[37m.");
 		proutn("New warp factor to try? ");
 		if (scan() == IHREAL) {
 			wfl = TRUE;

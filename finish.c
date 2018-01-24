@@ -6,12 +6,12 @@ void dstrct() {
 	/* Finish with a BANG! */
 	chew();
 	if (damage[DCOMPTR] != 0.0) {
-		prout("Computer damaged; cannot execute destruct sequence.");
+		prout("\033[33mComputer damaged; cannot execute destruct sequence\033[37m.");
 		return;
 	}
 	skip(1);
-	prouts("---WORKING---"); skip(1);
-	prout("SELF-DESTRUCT-SEQUENCE-ACTIVATED");
+	prouts("\033[34m---WORKING---"); skip(1);
+	prout("\033[35mSELF-DESTRUCT-SEQUENCE-ACTIVATED\033[37m");
 	prouts("   10"); skip(1);
 	prouts("       9"); skip(1);
 	prouts("          8"); skip(1);
@@ -45,9 +45,9 @@ void dstrct() {
 void kaboom(void) {
 	stars();
 	if (ship==IHE) prouts("***");
-	prouts("********* Entropy of ");
+	prouts("\033[33m********* Entropy of ");
 	crmshp();
-	prouts(" maximized *********");
+	prouts(" maximized *********\033[37m");
 	skip(1);
 	stars();
 	skip(1);
@@ -72,7 +72,7 @@ void finish(FINTYPE ifin) {
 	switch (ifin) {
 		case FWON: // Game has been won
 			if (d.nromrem != 0)
-				printf("The remaining %d Romulans surrender to Starfleet Command.\n",
+				printf("The remaining \033[32m%d\033[37m Romulans surrender to Starfleet Command.\n",
 					   d.nromrem);
 
 
@@ -82,7 +82,7 @@ void finish(FINTYPE ifin) {
 #ifdef CAPTURE
             if (alive && brigcapacity-brigfree > 0) { // captured Klingon crew will get transfered to starbase
                 kcaptured += brigcapacity-brigfree;
-                printf("The %d captured Klingons are transferred to Star Fleet Command.\n",
+                printf("The \033[32m%d\033[37m captured Klingons are transferred to Star Fleet Command.\n",
                        brigcapacity-brigfree);
             }
 #endif
@@ -150,7 +150,7 @@ void finish(FINTYPE ifin) {
 				}
 				// Only grant long life if alive (original didn't!)
 				skip(1);
-				prout("LIVE LONG AND PROSPER.");
+				prout("\033[34mLIVE LONG AND PROSPER.\033[37m");
 			}
 			score(0);
 			if (igotit != 0) plaque();
@@ -358,49 +358,49 @@ void score(int inGame) {
     if (inGame) prout("Your score so far --");
     else prout("Your score --");
 	if (d.nromkl)
-		printf(d.nromkl> 1 ? "%6d Romulan ships destroyed            %5d\n" : "%6d Romulan ship destroyed             %5d\n",
+		printf(d.nromkl> 1 ? "\033[32m%6d\033[37m Romulan ships destroyed            \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m Romulan ship destroyed             \033[32m%5d\033[37m\n",
 			   d.nromkl, 20*d.nromkl);
 	if (dnromrem)
-		printf(dnromrem > 1 ? "%6d Romulan ships captured             %5d\n" : "%6d Romulan ship captured              %5d\n",
+		printf(dnromrem > 1 ? "\033[32m%6d\033[37m Romulan ships captured             \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m Romulan ship captured              \033[32m%5d\033[37m\n",
 			   dnromrem, dnromrem);
 	if (d.killk)
-		printf(d.killk > 1 ? "%6d ordinary Klingon ships destroyed   %5d\n" : "%6d ordinary Klingon ship destroyed    %5d\n",
+		printf(d.killk > 1 ? "\033[32m%6d\033[37m ordinary Klingon ships destroyed   \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m ordinary Klingon ship destroyed    \033[32m%5d\033[37m\n",
 			   d.killk,  10*d.killk);
 	if (d.killc)
-		printf(d.killc > 1 ? "%6d Klingon Commander ships destroyed  %5d\n" : "%6d Klingon Commander ship destroyed   %5d\n",
+		printf(d.killc > 1 ? "\033[32m%6d\033[37m Klingon Commander ships destroyed  \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m Klingon Commander ship destroyed   \033[32m%5d\033[37m\n",
 			   d.killc, 50*d.killc);
 	if (d.nsckill)
-		printf("%6d Super-Commander ship destroyed     %5d\n",
+		printf("\033[32m%6d\033[37m Super-Commander ship destroyed     \033[32m%5d\033[37m\n",
 			   d.nsckill, 200*d.nsckill);
 	if (ithperd)
-		printf("%6.2f Klingons per stardate              %5d\n",
+		printf("\033[32m%6.2f\033[37m Klingons per stardate              \033[32m%5d\033[37m\n",
 			   perdate, ithperd);
 #ifdef CAPTURE
 	if (kcaptured)
-		printf(kcaptured > 1 ? "%6d Klingons captured                  %5d\n" : "%6d Klingon captured                   %5d\n",
+		printf(kcaptured > 1 ? "\033[32m%6d\033[37m Klingons captured                  \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m Klingon captured                   \033[32m%5d\033[37m\n",
 		        kcaptured, 3*kcaptured);
 #endif
 	if (d.starkl)
-		printf(d.starkl > 1 ? "%6d stars destroyed by your action     %5d\n" : "%6d star destroyed by your action      %5d\n",
+		printf(d.starkl > 1 ? "\033[32m%6d\033[37m stars destroyed by your action     \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m star destroyed by your action      \033[32m%5d\033[37m\n",
 			   d.starkl, -5*d.starkl);
 	if (d.nplankl)
-		printf(d.nplankl > 1 ? "%6d planets destroyed by your action   %5d\n" : "%6d planet destroyed by your action    %5d\n",
+		printf(d.nplankl > 1 ? "\033[32m%6d\033[37m planets destroyed by your action   \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m planet destroyed by your action    \033[32m%5d\033[37m\n",
 			   d.nplankl, -10*d.nplankl);
 	if (d.basekl)
-		printf(d.basekl > 1 ? "%6d bases destroyed by your action     %5d\n" : "%6d base destroyed by your action      %5d\n",
+		printf(d.basekl > 1 ? "\033[32m%6d\033[37m bases destroyed by your action     \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m base destroyed by your action      \033[32m%5d\033[37m\n",
 			   d.basekl, -100*d.basekl);
 	if (nhelp)
-		printf(nhelp > 1 ? "%6d calls for help from starbase       %5d\n" : "%6d call for help from starbase        %5d\n",
+		printf(nhelp > 1 ? "\033[32m%6d\033[37m calls for help from starbase       \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m call for help from starbase        \033[32m%5d\033[37m\n",
 			   nhelp, -45*nhelp);
 	if (casual)
-		printf(casual > 1 ? "%6d casualties incurred                %5d\n" : "%6d casualty incurred                  %5d\n",
+		printf(casual > 1 ? "\033[32m%6d\033[37m casualties incurred                \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m casualty incurred                  \033[32m%5d\033[37m\n",
 			   casual, -casual);
 	if (klship)
-		printf(klship > 1 ? "%6d ships lost or destroyed            %5d\n" : "%6d ship lost or destroyed             %5d\n",
+		printf(klship > 1 ? "\033[32m%6d\033[37m ships lost or destroyed            \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m ship lost or destroyed             \033[32m%5d\033[37m\n",
 			   klship, -100*klship);
 #ifdef CLOAKING
 	if (ncviol>0)
-		printf(ncviol > 1 ? "%6d Treaty of Algeron violations       %5d\n" : "%6d Treaty of Algeron violation        %5d\n",
+		printf(ncviol > 1 ? "\033[32m%6d\033[37m Treaty of Algeron violations       \033[32m%5d\033[37m\n" : "\033[32m%6d\033[37m Treaty of Algeron violation        \033[32m%5d\033[37m\n",
 		       ncviol, -100*ncviol);
 #endif
 	if (alive==0)
@@ -415,11 +415,11 @@ void score(int inGame) {
 			case SEXPERT: proutn("Expert game  "); break;
 			case SEMERITUS: proutn("Emeritus game"); break;
 		}
-		printf("           %5d\n", iwon);
+		printf("           \033[32m%5d\033[37m\n", iwon);
 	}
 	skip(2);
-    printf("TOTAL SCORE                               %5d\n", iscore);
-    if (inGame && skill < SGOOD) printf("REMEMBER--The score doesn't really matter until the mission is accomplished!\n");
+    printf("TOTAL SCORE                               \033[32m%5d\033[37m\n", iscore);
+    if (inGame && skill < SGOOD) printf("\033[35mREMEMBER--The score doesn't really matter until the mission is accomplished!\033[37m\n");
 }
 
 void plaque(void) {

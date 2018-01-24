@@ -29,7 +29,7 @@ void preport(void) {
 	int iknow = 0, i;
 	skip(1);
 	chew();
-	prout("Spock-  \"Planet report follows, Captain.\"");
+	prout("\033[34mSpock\033[37m-  \"Planet report follows, Captain.\"");
 	skip(1);
 	for (i = 1; i <= inplan; i++) {
 		if (d.plnets[i].known
@@ -74,12 +74,12 @@ void orbit(void) {
 		return;
 	}
 	Time = 0.02+0.03*Rand();
-	prout("Helmsman Sulu-  \"Entering standard orbit, Sir.\"");
+	prout("\033[31mHelmsman Sulu\033[37m-  \"Entering standard orbit, Sir.\"");
 	newcnd();
 	if (consumeTime()) return;
-	proutn("Sulu-  \"Entered orbit at altitude ");
+	proutn("\033[31mSulu\033[37m-  \"Entered orbit at altitude \033[32m");
 	cramf(height = (1400.+7200.*Rand()), 0, 2);
-	prout(" kilometers.\"");
+	prout("\033[37m kilometers.\"");
 	inorbit = 1;
 	return;
 }
@@ -95,7 +95,7 @@ void sensor(void) {
 		prout("No planet in this quadrant.");
 		return;
 	}
-	proutn("Spock-  \"Sensor scan for");
+	proutn("\033[34mSpock\033[37m-  \"Sensor scan for");
 	cramlc(1, quadx, quady);
 	prout("-");
 	skip(1);
@@ -120,7 +120,7 @@ void beam(void) {
 		prout("Transporter damaged.");
 		if (damage[DSHUTTL]==0 && (d.plnets[iplnet].known==2 || iscraft == 1)) {
 			skip(1);
-			prout("Spock-  \"May I suggest the shuttle craft, Sir?\" ");
+			prout("\033[34mSpock\033[37m-  \"May I suggest the shuttle craft, Sir?\" ");
 			if (ja() != 0) shuttle();
 		}
 		return;
@@ -135,7 +135,7 @@ void beam(void) {
 		return;
 	}
 	if (d.plnets[iplnet].known==0) {
-		prout("Spock-  \"Captain, we have no information on this planet");
+		prout("\033[34mSpock\033[37m-  \"Captain, we have no information on this planet");
 		prout("  and Starfleet Regulations clearly state that in this situation");
 		prout("  you may not go down.\"");
 		return;
@@ -143,7 +143,7 @@ void beam(void) {
 	if (landed==1) {
 		/* Coming from planet */
 		if (d.plnets[iplnet].known==2) {
-			proutn("Spock-  \"Wouldn't you rather take the Galileo?\" ");
+			proutn("\033[34mSpock\033[37m-  \"Wouldn't you rather take the Galileo?\" ");
 			if (ja() != 0) {
 				chew();
 				return;
@@ -160,7 +160,7 @@ void beam(void) {
 	else {
 		/* Going to planet */
 		if (d.plnets[iplnet].crystals==0) {
-			prout("Spock-  \"Captain, I fail to see the logic in");
+			prout("\033[34mSpock\033[37m-  \"Captain, I fail to see the logic in");
 			prout("  exploring a planet with no dilithium crystals.");
 			proutn("  Are you sure this is wise?\" ");
 			if (ja()==0) {
@@ -168,11 +168,11 @@ void beam(void) {
 				return;
 			}
 		}
-		prout("Scotty-  \"Transporter room ready, Sir.\"");
+		prout("\033[31mScotty\033[37m-  \"Transporter room ready, Sir.\"");
 		skip(1);
 		prout("Kirk, and landing party prepare to beam down to planet surface.");
 		skip(1);
-		prout("Kirk-  \"Energize.\"");
+		prout("\033[33mKirk\033[37m-  \"Energize.\"");
 	}
 	skip(1);
 	prouts("WWHOOOIIIIIRRRRREEEE.E.E.  .  .  .  .   .    .");
@@ -180,7 +180,7 @@ void beam(void) {
 	if (Rand() > 0.98) {
 		prouts("BOOOIIIOOOIIOOOOIIIOIING . . .");
 		skip(2);
-		prout("Scotty-  \"Oh my God!  I've lost them.\"");
+		prout("\033[31mScotty\033[37m-  \"Oh my God!  I've lost them.\"");
 		finish(FLOST);
 		return;
 	}
@@ -239,11 +239,11 @@ void usecrystals(void) {
 		return;
 	}
 	if (energy >= 1000) {
-		prout("Spock-  \"Captain, Starfleet Regulations prohibit such an operation");
+		prout("\033[34mSpock\033[37m-  \"Captain, Starfleet Regulations prohibit such an operation");
 		prout("  except when condition Yellow exists.");
 		return;
 	}
-	prout("Spock- \"Captain, I must warn you that loading");
+	prout("\033[34mSpock\033[37m- \"Captain, I must warn you that loading");
 	prout("  raw dilithium crystals into the ship's power");
 	prout("  system may risk a severe explosion.");
 	proutn("  Are you sure this is wise?\" ");
@@ -252,13 +252,13 @@ void usecrystals(void) {
 		return;
 	}
 	skip(1);
-	prout("Engineering Officer Scott-  \"(GULP) Aye Sir.");
+	prout("\033[31mEngineering Officer Scott\033[37m-  \"(GULP) Aye Sir.");
 	prout("  Mr. Spock and I will try it.\"");
 	skip(1);
-	prout("Spock-  \"Crystals in place, Sir.");
+	prout("\033[34mSpock\033[37m-  \"Crystals in place, Sir.");
 	prout("  Ready to activate circuit.\"");
 	skip(1);
-	prouts("Scotty-  \"Keep your fingers crossed, Sir!\"");
+	prouts("\033[31mScotty\033[37m-  \"Keep your fingers crossed, Sir!\"");
 	skip(1);
 	if (Rand() <= cryprob) {
 		prouts("  \"Activating now! - - No good!  It's***");
@@ -315,14 +315,14 @@ void shuttle(void) {
 		return;
 	}
 	if (d.plnets[iplnet].known==0) {
-		prout("Spock-  \"Captain, we have no information on this planet");
+		prout("\033[34mSpock\033[37m-  \"Captain, we have no information on this planet");
 		prout("  and Starfleet Regulations clearly state that in this situation");
 		prout("  you may not fly down.\"");
 		return;
 	}
 	Time = 3.0e-5*height;
 	if (Time >= 0.8*d.remtime) {
-		prout("First Officer Spock-  \"Captain, I compute that such");
+		prout("\033[34mFirst Officer Spock\033[37m-  \"Captain, I compute that such");
 		prout("  a maneuver would require approximately ");
 		cramf(100*Time/d.remtime,0,4);
 		prout("% of our");
@@ -338,7 +338,7 @@ void shuttle(void) {
 		if (iscraft==1) {
 			/* Galileo on ship! */
 			if (damage[DTRANSP]==0) {
-				proutn("Spock-  \"Would you rather use the transporter?\" ");
+				proutn("\033[34mSpock\033[37m-  \"Would you rather use the transporter?\" ");
 				if (ja() != 0) {
 					beam();
 					return;
@@ -408,18 +408,18 @@ void deathray(void) {
 		return;
 	}
 	if (nenhere==0) {
-		prout("Sulu-  \"But Sir, there are no enemies in this quadrant.\"");
+		prout("\033[31mSulu\033[37m-  \"But Sir, there are no enemies in this quadrant.\"");
 		return;
 	}
 	if (damage[DDRAY] > 0.0) {
 		prout("Death Ray is damaged.");
 		return;
 	}
-	prout("Spock-  \"Captain, the 'Experimental Death Ray'");
+	prout("\033[34mSpock\033[37m-  \"Captain, the 'Experimental Death Ray'");
 	prout("  is highly unpredictable.  Considering the alternatives,");
 	prout("  are you sure this is wise?\" ");
 	if (ja()==0) return;
-	prout("Spock-  \"Acknowledged.\"");
+	prout("\033[34mSpock\033[37m-  \"Acknowledged.\"");
 	skip(1);
 	ididit=1;
 	prouts("WHOOEE ... WHOOEE ... WHOOEE ... WHOOEE");
@@ -428,20 +428,20 @@ void deathray(void) {
 	prout("Spock and Scotty ready the death ray and");
 	prout("prepare to channel all ship's power to the device.");
 	skip(1);
-	prout("Spock-  \"Preparations complete, sir.\"");
-	prout("Kirk-  \"Engage!\"");
+	prout("\033[34mSpock\033[37m-  \"Preparations complete, sir.\"");
+	prout("\033[33mKirk\033[37m-  \"Engage!\"");
 	skip(1);
 	prouts("WHIRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
 	skip(1);
 	if (r > .30) {
-		prouts("Sulu- \"Captain!  It's working!\"");
+		prouts("\033[31mSulu\033[37m- \"Captain!  It's working!\"");
 		skip(2);
 		while (nenhere > 0) {
 			deadkl(kx[1],ky[1],quad[kx[1]][ky[1]],kx[1],ky[1]);
 		}
-		prout("Ensign Chekov-  \"Congratulations, Captain!\"");
+		prout("\033[33mEnsign Chekov\033[37m-  \"Congratulations, Captain!\"");
 		if (d.remkl == 0) finish(FWON);
-		prout("Spock-  \"Captain, I believe the `Experimental Death Ray'");
+		prout("\033[34mSpock\033[37m-  \"Captain, I believe the `Experimental Death Ray'");
 		if (Rand() <= 0.05) {
 			prout("   is still operational.\"");
 		}
@@ -453,7 +453,7 @@ void deathray(void) {
 	}
 	r = Rand();	// Pick failure method 
 	if (r <= .30) {
-		prouts("Sulu- \"Captain!  It's working!\"");
+		prouts("\033[31mSulu\033[37m- \"Captain!  It's working!\"");
 		skip(1);
 		prouts("***RED ALERT!  RED ALERT!");
 		skip(1);
@@ -468,23 +468,23 @@ void deathray(void) {
 		return;
 	}
 	if (r <= .55) {
-		prouts("Sulu- \"Captain!  Yagabandaghangrapl, brachriigringlanbla!\"");
+		prouts("\033[31mSulu\033[37m- \"Captain!  Yagabandaghangrapl, brachriigringlanbla!\"");
 		skip(1);
-		prout("Lt. Uhura-  \"Graaeek!  Graaeek!\"");
+		prout("\033[31mLt. Uhura\033[37m-  \"Graaeek!  Graaeek!\"");
 		skip(1);
-		prout("Spock-  \"Fascinating!  . . . All humans aboard");
+		prout("\033[34mSpock\033[37m-  \"Fascinating!  . . . All humans aboard");
 		prout("  have apparently been transformed into strange mutations.");
 		prout("  Vulcans do not seem to be affected.");
 		skip(1);
-		prout("Kirk-  \"Raauch!  Raauch!\"");
+		prout("\033[33mKirk\033[37m-  \"Raauch!  Raauch!\"");
 		finish(FDRAY);
 		return;
 	}
 	if (r <= 0.75) {
 		int i,j;
-		prouts("Sulu- \"Captain!  It's   --WHAT?!?!\"");
+		prouts("\033[31mSulu\033[37m- \"Captain!  It's   --WHAT?!?!\"");
 		skip(2);
-		proutn("Spock-  \"I believe the word is");
+		proutn("\033[34mSpock\033[37m-  \"I believe the word is");
 		prouts(" *ASTONISHING*");
 		prout(" Mr. Sulu.");
 		for (i=1; i<=10; i++)
@@ -496,9 +496,9 @@ void deathray(void) {
 		prout("  I have no logical explanation.\"");
 		return;
 	}
-	prouts("Sulu- \"Captain!  The Death Ray is creating tribbles!\"");
+	prouts("\033[31mSulu\033[37m- \"Captain!  The Death Ray is creating tribbles!\"");
 	skip(1);
-	prout("Scotty-  \"There are so many tribbles down here");
+	prout("\033[31mScotty\033[37m-  \"There are so many tribbles down here");
 	prout("  in Engineering, we can't move for 'em, Captain.\"");
 	finish(FTRIBBLE);
 	return;
