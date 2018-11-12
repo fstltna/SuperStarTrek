@@ -11,6 +11,9 @@ Installation Steps
 3. **cp sst sst.doc SST_Logo.txt /sbbs/doors/sst**
 
 Run scfg and add a new door with these settings:
+
+![SuperStarTrek SBBS Config](https://synchronetbbs.org/SuperStarTrek_SBBS_Config.png) 
+
 1. **startup directory:** sst
 2. **command line:** ./sst
 3. **multiple concurrent users:** yes
